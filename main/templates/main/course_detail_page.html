@@ -1,0 +1,38 @@
+{% extends "main/base.html" %}
+{% load static %}
+
+{% block title %} Index Page Title {% endblock %}
+
+{% block body %}
+    <div class="row mt-4">
+        <div class="col-sm-6">
+          <img src="{{MEDIA_URL}}{{ course.course_logo}}" style="width:100%;" alt="Course logo">
+        </div>
+        <div class="col-sm-6">
+          <h2>{{ course.name }}</h2>
+          <p>{{ course.description }}</p>
+        </div>
+    </div>
+
+
+    <div class="row">
+        <div class="col-sm-12">
+            <form method="post">
+                {% csrf_token %}
+                <input name="author" placeholder="Автор" type="text">
+                <input name="comment" placeholder="Комментарий" type="text">
+                <input type="submit" value="Отправить">
+        </form>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-12">
+            <ul>
+                {% for comment in comments %}
+                    <li>{{ comment.created_date }}: {{ comment.author }}<br>
+                    {{ comment.comment_text }} </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+{% endblock %}
